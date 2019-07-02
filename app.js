@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -7,13 +9,9 @@ const methodOverride = require("method-override");
 const app = express();
 
 mongoose.Promise = global.Promise;
-mongoose
-  .connect(
-    "mongodb+srv://atlasnavi:3u7TREmYj726PGme@yelpcamp-database-4xjxz.mongodb.net/test?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("Successfully Connected to the Database");
-  });
+mongoose.connect(process.env.MONGODB_URL).then(() => {
+  console.log("Successfully Connected to the Database");
+});
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSanitizer());
